@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy 22nd Birthday, My Love</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Georgia", serif;
+      background: linear-gradient(135deg, #f5e6ff, #d6f0ff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Envelope Cover */
+    .envelope {
+      text-align: center;
+      background: white;
+      padding: 50px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      cursor: pointer;
+      transition: transform 0.6s ease, opacity 0.6s ease;
+    }
+    .envelope h1 {
+      font-size: 2rem;
+      color: #7d4bcc;
+    }
+    .envelope p {
+      color: #444;
+      margin-top: 10px;
+    }
+
+    /* Hidden Card */
+    .card {
+      max-width: 700px;
+      background: #fff;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      animation: fadeIn 2s ease;
+      display: none;
+      position: relative;
+      z-index: 2;
+    }
+    h2 {
+      font-size: 1.3rem;
+      text-align: center;
+      color: #555;
+      margin-bottom: 30px;
+    }
+    p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin: 15px 0;
+    }
+    .signature {
+      margin-top: 30px;
+      text-align: right;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: #7d4bcc;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      color: #ff6b9d;
+      font-size: 20px;
+      animation: floatUp 6s infinite ease-in;
+      opacity: 0.7;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 0.8; }
+      100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Envelope -->
+  <div class="envelope" id="envelope">
+    <h1>💌 Click to Open 💌</h1>
+    <p>I made something special just for you...</p>
+  </div>
+
+  <!-- Hidden Card -->
+  <div class="card" id="card">
+    <h1>Hewooo, My Love, my dear Frea, my lovely Anya 🌸✨</h1>
+    <h2>Happy 22nd Birthday 💫</h2>
+
+    <p>Twenty-two. What a number. Twenty-two years of your laughter, your tears, your quiet battles, your loud victories, your dreams whispering themselves into being. Twenty-two years of becoming <em>you.</em></p>
+
+    <p>And here I am, lucky enough to know this version of you — the one who carries a thousand shades of strength and softness, the one who both steadies me and sets me free.</p>
+
+    <p>I want to say this honestly: I’m sorry. Sorry for the times I let my storms spill into your sunshine, sorry for the moments where I become heavy in your hands. I feel bad for every moment I make it harder for you to just breathe and be. And yet… you stay. You hold me in ways that teach me what love really is.</p>
+
+    <p>Thank you for being light when I feel heavy, for being steady when I feel scattered. Thank you for loving me not just when I shine, but also when I crumble. Thank you for being the person you’ve been, the soul you are now, and the becoming you’re still walking toward.</p>
+
+    <p>So here’s to you, my 22-year-old wonder. 🩵 May this year be soft to you. May it bring you joy so deep it makes your heart overflow, and peace so steady it feels like home. May the universe lean gently in your favor, weaving blessings into your every step. And may you never forget, not for a single moment, how deeply, endlessly, unapologetically loved you are.</p>
+
+    <p class="signature">Always and forever yours,<br>Kiel ❤️</p>
+  </div>
+
+  <!-- Background music (starts on click) -->
+  <audio id="music" loop>
+    <source src="song.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    const envelope = document.getElementById("envelope");
+    const card = document.getElementById("card");
+    const music = document.getElementById("music");
+
+    envelope.addEventListener("click", () => {
+      envelope.style.opacity = "0";
+      envelope.style.transform = "scale(0.9)";
+      setTimeout(() => {
+        envelope.style.display = "none";
+        card.style.display = "block";
+      }, 600);
+      music.play();
+
+      // Start hearts animation
+      setInterval(createHeart, 600);
+    });
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = "❤";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (20 + Math.random() * 20) + "px";
+      heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 8000);
+    }
+  </script>
+</body>
+</html>
