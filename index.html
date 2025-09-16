@@ -2,59 +2,104 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday My Love</title>
+  <title>Happy 22nd Birthday, My Love</title>
   <style>
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Courier New', monospace;
-      background: #fdf6f6;
+      font-family: "Georgia", serif;
+      background: linear-gradient(135deg, #f5e6ff, #d6f0ff);
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       overflow: hidden;
     }
-    #card {
-      width: 80%;
-      max-width: 700px;
-      padding: 30px;
-      background: #fffafc;
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+
+    /* Envelope Cover */
+    .envelope {
       text-align: center;
-      display: none;
-      animation: fadeIn 1.5s ease;
-    }
-    #openBtn {
-      padding: 15px 30px;
-      background: #ff9bb5;
-      color: white;
-      font-size: 18px;
-      border: none;
-      border-radius: 12px;
+      background: white;
+      padding: 50px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
       cursor: pointer;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-      transition: 0.3s;
+      transition: transform 0.6s ease, opacity 0.6s ease;
     }
-    #openBtn:hover {
-      background: #ff7799;
+    .envelope h1 {
+      font-size: 2rem;
+      color: #7d4bcc;
     }
+    .envelope p {
+      color: #444;
+      margin-top: 10px;
+    }
+
+    /* Hidden Card */
+    .card {
+      max-width: 700px;
+      background: #fff;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      animation: fadeIn 2s ease;
+      display: none;
+      position: relative;
+      z-index: 2;
+    }
+    h2 {
+      font-size: 1.3rem;
+      text-align: center;
+      color: #555;
+      margin-bottom: 30px;
+    }
+    p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin: 15px 0;
+    }
+    .signature {
+      margin-top: 30px;
+      text-align: right;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: #7d4bcc;
+    }
+
     @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(20px);}
-      to {opacity: 1; transform: translateY(0);}
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      color: #ff6b9d;
+      font-size: 20px;
+      animation: floatUp 6s infinite ease-in;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 0.8; }
+      100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
     }
   </style>
 </head>
 <body>
-  <button id="openBtn">💌 Click to Open</button>
+  <!-- Envelope -->
+  <div class="envelope" id="envelope">
+    <h1>💌 Click to Open 💌</h1>
+    <p>I made something special just for you...</p>
+  </div>
 
+  <!-- Hidden Card -->
   <div class="card" id="card">
-    <h1>Hewooo, My Love, my dear Frea, my lovely Anya 🌸✨</h1>
+    <h1>Hewooo, My Love 🌸✨</h1>
     <h2>Happy 22nd Birthday 💫</h2>
 
-    <p>Twenty-two. What a number. Twenty-two years of your laughter, your tears, your quiet battles, your loud victories, your dreams whispering themselves into being. Twenty-two years of becoming <em>you.</em></p>
+    <p>Twenty-two. What a beautiful number. Twenty-two years of your laughter, your tears, your quiet battles, your loud victories, your dreams whispering themselves into being. Twenty-two years of becoming <em>you.</em></p>
 
     <p>And here I am, lucky enough to know this version of you — the one who carries a thousand shades of strength and softness, the one who both steadies me and sets me free.</p>
 
@@ -64,21 +109,45 @@
 
     <p>So here’s to you, my 22-year-old wonder. 🩵 May this year be soft to you. May it bring you joy so deep it makes your heart overflow, and peace so steady it feels like home. May the universe lean gently in your favor, weaving blessings into your every step. And may you never forget, not for a single moment, how deeply, endlessly, unapologetically loved you are.</p>
 
-    <p class="signature">Always and forever yours,<br>Kiel ❤️</p>
+    <p class="signature">Always and forever yours,<br>[Your Name] ❤️</p>
   </div>
 
-  <audio id="bg-music" src="song.mp3"></audio>
+  <!-- Background music (starts on click) -->
+  <audio id="music" controls autoplay>
+    <source src="song.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
 
   <script>
-    const btn = document.getElementById("openBtn");
+    const envelope = document.getElementById("envelope");
     const card = document.getElementById("card");
-    const music = document.getElementById("bg-music");
+    const music = document.getElementById("music");
 
-    btn.addEventListener("click", () => {
-      btn.style.display = "none";
-      card.style.display = "block";
+    envelope.addEventListener("click", () => {
+      envelope.style.opacity = "0";
+      envelope.style.transform = "scale(0.9)";
+      setTimeout(() => {
+        envelope.style.display = "none";
+        card.style.display = "block";
+      }, 600);
+
+      // play music on click (bypasses autoplay block)
       music.play().catch(err => console.log("Music play blocked:", err));
+
+      // Start hearts animation
+      setInterval(createHeart, 600);
     });
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = "❤";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (20 + Math.random() * 20) + "px";
+      heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 8000);
+    }
   </script>
 </body>
 </html>
