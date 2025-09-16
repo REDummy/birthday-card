@@ -95,11 +95,11 @@
   </div>
 
   <!-- Hidden Card -->
-  <div class="card" id="card">
-    <h1>Hewooo, My Love 🌸✨</h1>
+    <div class="card" id="card">
+    <h1>Hewooo, My Love, my dear Frea, my lovely Anya 🌸✨</h1>
     <h2>Happy 22nd Birthday 💫</h2>
 
-    <p>Twenty-two. What a beautiful number. Twenty-two years of your laughter, your tears, your quiet battles, your loud victories, your dreams whispering themselves into being. Twenty-two years of becoming <em>you.</em></p>
+    <p>Twenty-two. What a number. Twenty-two years of your laughter, your tears, your quiet battles, your loud victories, your dreams whispering themselves into being. Twenty-two years of becoming <em>you.</em></p>
 
     <p>And here I am, lucky enough to know this version of you — the one who carries a thousand shades of strength and softness, the one who both steadies me and sets me free.</p>
 
@@ -109,34 +109,40 @@
 
     <p>So here’s to you, my 22-year-old wonder. 🩵 May this year be soft to you. May it bring you joy so deep it makes your heart overflow, and peace so steady it feels like home. May the universe lean gently in your favor, weaving blessings into your every step. And may you never forget, not for a single moment, how deeply, endlessly, unapologetically loved you are.</p>
 
-    <p class="signature">Always and forever yours,<br>[Your Name] ❤️</p>
+    <p class="signature">Always and forever yours,<br>Kiel ❤️</p>
   </div>
-
+  
   <!-- Background music (starts on click) -->
-  <audio id="music" controls autoplay>
+   <audio id="music" preload="auto" loop>
     <source src="song.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
-
+  
   <script>
     const envelope = document.getElementById("envelope");
     const card = document.getElementById("card");
     const music = document.getElementById("music");
 
-    envelope.addEventListener("click", () => {
-      envelope.style.opacity = "0";
-      envelope.style.transform = "scale(0.9)";
-      setTimeout(() => {
-        envelope.style.display = "none";
-        card.style.display = "block";
-      }, 600);
+   envelope.addEventListener("click", () => {
+    envelope.style.opacity = "0";
+    envelope.style.transform = "scale(0.9)";
+    setTimeout(() => {
+      envelope.style.display = "none";
+      card.style.display = "block";
+    }, 600);
 
-      // play music on click (bypasses autoplay block)
-      music.play().catch(err => console.log("Music play blocked:", err));
-
-      // Start hearts animation
-      setInterval(createHeart, 600);
+    // ensure audio starts correctly
+    music.currentTime = 0;  // restart from beginning
+    music.volume = 1.0;
+    music.muted = false;
+    music.play().then(() => {
+      console.log("Music started 🎵");
+    }).catch(err => {
+      console.log("Music play blocked:", err);
     });
+
+    setInterval(createHeart, 600);
+  });
 
     function createHeart() {
       const heart = document.createElement("div");
